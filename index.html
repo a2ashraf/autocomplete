@@ -138,7 +138,6 @@ body {
 
 
 
-
 <script type="text/javascript">//<![CDATA[
 $(function(){
 // This example displays an address form, using the autocomplete feature
@@ -157,7 +156,8 @@ var componentForm = {
     country: 'long_name',
     postal_code: 'short_name'
 };
-
+    
+ 
 function initialize() {
     // Create the autocomplete object, restricting the search
     // to geographical location types.
@@ -180,6 +180,7 @@ function initialize() {
     // populate the address fields in the form.
     google.maps.event.addListener(autocomplete, 'place_changed', function () {
         fillInAddress();
+        copyTextOverToHidden();
     });
 }
 
@@ -206,39 +207,78 @@ function fillInAddress() {
         }
     }
 }
+    
+    function copyTextOverToHidden() {
+     
+        $("#finaltext").val(
+            $("#route").val() + ' ' + 
+            $("#street_number").val() + ': ' + 
+            $("#locality").val() + ': ' + 
+            $("#administrative_area_level_1").val() + ': ' + 
+            $("#postal_code").val() + ': ' + 
+            $("#country").val() + ': ' + 
+            $("#latitude").val() + ':  ' + 
+            $("#longitude").val()
+        );
+        
+        
+        
+    }
+    
 // [END region_fillform]
 
 // [START region_geolocation]
 // Bias the autocomplete object to the user's geographical location,
 // as supplied by the browser's 'navigator.geolocation' object.
-function geolocate() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var geolocation = new google.maps.LatLng(
-            position.coords.latitude, position.coords.longitude);
-
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
-            document.getElementById("latitude").value = latitude;
-            document.getElementById("longitude").value = longitude;
-
-            autocomplete.setBounds(new google.maps.LatLngBounds(geolocation, geolocation));
-            
-        });
-    }
-
-}
+//function geolocate() {
+//    if (navigator.geolocation) {
+//        navigator.geolocation.getCurrentPosition(function (position) {
+//            var geolocation = new google.maps.LatLng(
+//            position.coords.latitude, position.coords.longitude);
+//
+//            var latitude = position.coords.latitude;
+//            var longitude = position.coords.longitude;
+//            document.getElementById("latitude").value = latitude;
+//            document.getElementById("longitude").value = longitude;
+//
+//            autocomplete.setBounds(new google.maps.LatLngBounds(geolocation, geolocation));
+//            
+//        });
+//    }
+//
+//}
 
 initialize();
 // [END region_geolocation]
+    
+    
+    
+    
 });//]]> 
 
-</script>
+    
+ </script>
 
   
 <script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/28/2/common.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/28/2/util.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/28/2/controls.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/28/2/places_impl.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/28/2/stats.js"></script></head>
 
 <body>
+ 
+<!-- Trigger -->
+    
+    <script src="../dist/clipboard.min.js"></script>
+     <script>
+    var clipboard = new Clipboard('.btn');
+
+    clipboard.on('success', function(e) {
+        console.log(e);
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+    </script>
+
   <div id="locationField">
     <input id="autocomplete" placeholder="Enter Address address" type="text" autocomplete="off" style="width: 600px">
 </div>
@@ -284,7 +324,12 @@ initialize();
             <input type="text" class="field" id="longitude">
         </td>
     </tr>
+         
 </tbody></table>
+    <button class="btn" data-clipboard-action="copy" data-clipboard-target="#finaltext" style="width: 200px; margin-left: 100px" >Copy To Clipboard</button>
+    <input  id="finaltext" type="text" style="width: 300px"  >
+    
+    
   
   <script>
   // tell the embed parent frame the height of the content
