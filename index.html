@@ -94,7 +94,7 @@ html {
 body {
     display: table-cell;
     vertical-align: middle;
-}
+}I sii 
 </style>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="robots" content="noindex, nofollow">
@@ -145,7 +145,7 @@ $(function(){
 // of the Google Places API to help users fill in the information.
 
 $("#autocomplete").on('focus', function () {
-    geolocate();
+    
 });
 
 var placeSearch, autocomplete;
@@ -161,10 +161,21 @@ var componentForm = {
 function initialize() {
     // Create the autocomplete object, restricting the search
     // to geographical location types.
+    var options = {
+        types: ['regions']
+    };
     autocomplete = new google.maps.places.Autocomplete(
     /** @type {HTMLInputElement} */ (document.getElementById('autocomplete')), {
-        types: ['geocode']
+        types: ['address']
     });
+    
+    
+     autocomplete.setComponentRestrictions(
+            {
+                'country': ['de']
+            
+            });
+    
     // When the user selects an address from the dropdown,
     // populate the address fields in the form.
     google.maps.event.addListener(autocomplete, 'place_changed', function () {
@@ -212,6 +223,7 @@ function geolocate() {
             document.getElementById("longitude").value = longitude;
 
             autocomplete.setBounds(new google.maps.LatLngBounds(geolocation, geolocation));
+            
         });
     }
 
@@ -228,7 +240,7 @@ initialize();
 
 <body>
   <div id="locationField">
-    <input id="autocomplete" placeholder="Enter youfwr address" type="text" autocomplete="off" style="width: 600px">
+    <input id="autocomplete" placeholder="Enter Address address" type="text" autocomplete="off" style="width: 600px">
 </div>
 <table id="address">
     <tbody><tr>
