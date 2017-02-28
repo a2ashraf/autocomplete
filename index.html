@@ -143,13 +143,13 @@ function initialize() {
     };
     autocomplete = new google.maps.places.Autocomplete(
     /** @type {HTMLInputElement} */ (document.getElementById('autocomplete')), {
-        types: ['address']
+        types: ['geocodes']
     });
     
     
      autocomplete.setComponentRestrictions(
             {
-                'country': ['de']
+                'country': ['de','uk']
             
             });
     
